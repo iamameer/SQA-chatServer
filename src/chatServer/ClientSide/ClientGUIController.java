@@ -73,7 +73,6 @@ public class ClientGUIController implements Initializable{
                         System.out.println("Receive: "+response);
                         txtChat.appendText(response + "\n");
                         response = oldresponse;
-                    //SwingUtilities.invokeLater(r);
                 }catch (Exception e){e.printStackTrace();}
             }
         });
