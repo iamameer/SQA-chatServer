@@ -5,12 +5,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane fx:controller="chatServer.ClientSide.ClientGUIController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/8.0.72" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chatServer.ClientSide.ClientGUIController">
    <children>
       <Button fx:id="btnSend" layoutX="330.0" layoutY="84.0" mnemonicParsing="false" text="Send" />
-      <TextField fx:id="txtMessage" layoutX="144.0" layoutY="84.0" promptText="Message" />
-      <TextArea fx:id="txtChat" layoutX="130.0" layoutY="153.0" prefHeight="200.0" prefWidth="200.0" promptText="Chatbox" />
+      <TextField fx:id="txtMessage" layoutX="36.0" layoutY="84.0" prefHeight="25.0" prefWidth="257.0" promptText="Message" />
+      <TextArea fx:id="txtChat" layoutX="31.0" layoutY="153.0" prefHeight="200.0" prefWidth="379.0" promptText="Chatbox" />
       <TextField fx:id="txtName" layoutX="144.0" layoutY="32.0" promptText="Name" />
    </children>
 </Pane>

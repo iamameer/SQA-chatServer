@@ -89,6 +89,7 @@ public class Connection implements Runnable{
 				break;		
 		}
 		sendOverConnection("OK " + status);
+		System.out.println("SENDING STAT");
 	}
 	
 	private void list() {
