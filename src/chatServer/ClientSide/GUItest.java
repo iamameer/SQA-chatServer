@@ -38,6 +38,7 @@ public class GUItest extends Application {
     PrintWriter out = null;
     String response = null;
     String oldresponse = null;
+    static Runnable r;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -58,7 +59,7 @@ public class GUItest extends Application {
             oldresponse = response;
         }catch (Exception e){e.printStackTrace();}
 
-        btnSend.setOnAction(new EventHandler<ActionEvent>() {
+        /*btnSend.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try{
@@ -72,9 +73,9 @@ public class GUItest extends Application {
                     response = oldresponse;
                 }catch (Exception e){e.printStackTrace();}
             }
-        });
+        });*/
 
-        final Runnable r = new Runnable() {
+        r = new Runnable() {
             @Override
             public void run() {
                 try{
@@ -85,10 +86,24 @@ public class GUItest extends Application {
                 }catch (Exception e) {e.printStackTrace();}
             }
         };
-        SwingUtilities.invokeLater(r);
+
+    }
+
+    public void onClick(){
+        try{
+            out.println(txtMessage.getText());
+            System.out.println("Sent: "+txtMessage.getText());
+            if (in.ready()){
+                response = in.readLine();
+                System.out.println("Receive: "+response);
+            }
+            txtChat.appendText(response + "\n");
+            response = oldresponse;
+        }catch (Exception e){e.printStackTrace();}
     }
 
     public static void main(String[] args) {
         launch(args);
+        SwingUtilities.invokeLater(r);
     }
 }

@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.security.Principal;
 import java.util.*;
+import java.util.Timer;
 
 /**
  * Created by Ameer Sorne on 18/12/2017.
@@ -44,35 +45,26 @@ public class ClientGUIController implements Initializable{
             socket = new Socket("Alina", 9000);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(),true);
-            response = in.readLine();
-            System.out.println(response);
-            txtChat.appendText(response+"\n");
-            oldresponse = response;
         }catch (Exception e){e.printStackTrace();}
 
-        final Runnable r = new Runnable() {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                System.out.println("test");
                 try{
-                    if (!oldresponse.equals(response)){
+                    response = in.readLine();
                     System.out.println("Receive: "+response);
-                    txtChat.appendText(response + "\n");
-                    }
-                }catch (Exception e) {e.printStackTrace();}
+                    if(!response.equals("")){txtChat.appendText(response + "\n");}
+                }catch (Exception e){e.printStackTrace();}
             }
-        };
-        SwingUtilities.invokeLater(r);
+        },1000,1000);
 
         btnSend.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try{
-                        out.println(txtMessage.getText());
-                        System.out.println("Sent: "+txtMessage.getText());
-                        response = in.readLine();
-                        System.out.println("Receive: "+response);
-                        txtChat.appendText(response + "\n");
-                        response = oldresponse;
+                    out.println(txtMessage.getText());
+                    System.out.println("Sent: "+txtMessage.getText());
                 }catch (Exception e){e.printStackTrace();}
             }
         });
