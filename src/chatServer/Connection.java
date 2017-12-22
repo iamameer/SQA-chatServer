@@ -155,7 +155,7 @@ public class Connection implements Runnable{
 					int messageStart = message.indexOf(" ");
 					String user = message.substring(0, messageStart);
 					String pm = message.substring(messageStart+1);
-					if(serverReference.sendPrivateMessage("PM from " + username + ":" + pm, user)){
+					if(serverReference.sendPrivateMessage("PM from " + username + ": " + pm, user)){
 						sendOverConnection("OK your message has been sent");
 					} else {
 						sendOverConnection("BAD the user does not exist");
