@@ -1,3 +1,10 @@
+/* ClientGUIController.java : Controller class for the UI
+*
+*  Methods        : initializeUI()  - Initializing UI at initial states
+*                   setEvents()     - Setting up listeners(events) to the items
+*                   initialize()    - Launching as soon as a controller is called(when a UI created)
+* */
+
 package chatServer.ClientSide;
 
 import javafx.beans.value.ChangeListener;
@@ -8,41 +15,34 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
-
-import javax.swing.*;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
-import java.security.Principal;
 import java.util.*;
 import java.util.Timer;
 
-/**
- * Created by Ameer Sorne on 18/12/2017.
- */
 public class ClientGUIController implements Initializable{
 
+    //FXML binding
     @FXML
     public Button btnSend = new Button(), btnStat = new Button(), btnList = new Button(), btnQuit = new Button();
-
     @FXML
     public TextField txtName = new TextField(), txtMessage = new TextField(), txtSend = new TextField();
-
     @FXML
     public TextArea txtChat = new TextArea();
-
     @FXML
     public RadioButton rbtnBroadcast = new RadioButton(), rbtnPM = new RadioButton();
 
+    //Global variables
     Socket socket = null;
     BufferedReader in = null;
     PrintWriter out = null;
     String response = null;
     String action = null;
 
+    //Method to initialize UI at initial states
     private void initializeUI(){
         txtChat.setEditable(false);
         txtName.setDisable(false);
@@ -61,8 +61,9 @@ public class ClientGUIController implements Initializable{
         rbtnPM.setDisable(true);
     }
 
+    //Method to set up listeners(events) to the items
     private void setEvents(){
-
+        //Listener for textName, that will enable certain UI once text is typed into it
         txtName.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -80,6 +81,7 @@ public class ClientGUIController implements Initializable{
             }
         });
 
+        //Listener for textSend, that enable button Send if the text is not empty
         txtSend.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -91,6 +93,7 @@ public class ClientGUIController implements Initializable{
             }
         });
 
+        //Event for button STATUS
         btnStat.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -102,6 +105,7 @@ public class ClientGUIController implements Initializable{
             }
         });
 
+        //Event for button LIST
         btnList.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -113,6 +117,7 @@ public class ClientGUIController implements Initializable{
             }
         });
 
+        //Event for button QUIT
         btnQuit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -124,6 +129,7 @@ public class ClientGUIController implements Initializable{
             }
         });
 
+        //Radiobutton Listener, change of item properties
         rbtnPM.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -139,6 +145,7 @@ public class ClientGUIController implements Initializable{
             }
         });
 
+        //Radiobutton Listener, change of item properties
         rbtnBroadcast.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -152,6 +159,11 @@ public class ClientGUIController implements Initializable{
             }
         });
 
+        //Event for button SEND
+        //This button has 2 FUNCTIONs, which depends on the text displayed
+        //LOGIN: it will register the user into server via IDEN command
+        //SEND: it will send deliver message to the server
+        //    - Under SEND it will check whether its a broadcast(HAIL) or private message(MESG)
         btnSend.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -185,18 +197,22 @@ public class ClientGUIController implements Initializable{
         });
     }
 
+    //Method launching as soon as a controller is called(when a UI created)
     @Override
     public void initialize(URL location, final ResourceBundle resourceBundle){
 
+        //Setting up UI and events
         initializeUI();
         setEvents();
 
+        //Creating a new connection with the server
         try{
             socket = new Socket("Alina", 9000);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(),true);
         }catch (Exception e){e.printStackTrace();}
 
+        //A thread to keep on listening replies from the server
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -208,6 +224,5 @@ public class ClientGUIController implements Initializable{
                 }catch (Exception e){e.printStackTrace();}
             }
         },1000,1000);
-
     }
 }

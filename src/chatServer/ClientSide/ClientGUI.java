@@ -1,3 +1,9 @@
+/* ClientGUI.java : MAIN class to load the GUI FXML
+*
+*  Methods        : main()  - Main Method
+*                   start() - connecting FXML file and launching scene
+* */
+
 package chatServer.ClientSide;
 
 import javafx.application.Application;
@@ -16,13 +22,11 @@ public class ClientGUI extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        //connecting FXML GUI file
         try{
             Parent root = FXMLLoader.load(getClass().getResource("GUI.fxml"));
-
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
         }catch (Exception e){e.printStackTrace();}
-
-
     }
 }
