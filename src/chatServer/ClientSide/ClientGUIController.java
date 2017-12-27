@@ -123,6 +123,7 @@ public class ClientGUIController implements Initializable{
                 try{
                     out.println(action);
                     System.out.println("Sent: "+txtMessage.getText());
+                    initializeUI();
                 }catch (Exception e){e.printStackTrace();}
             }
         });
@@ -234,7 +235,7 @@ public class ClientGUIController implements Initializable{
                 try{
                     response = in.readLine();
                     System.out.println("Receive: "+response);
-                    if(!response.equals("")){txtChat.appendText(response + "\n");}
+                    if(!response.isEmpty()){txtChat.appendText(response + "\n");}
                 }catch (Exception e){e.printStackTrace();}
             }
         },1000,1000);
