@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -65,6 +66,34 @@ public class ServerTest {
                 out.println(action);
                 response = in.readLine().substring(0,22);
                 Assert.assertEquals("OK There are currently",response);
+                System.out.println(response);
+                if (response!=null){start = false;}
+            }catch (Exception e){e.printStackTrace();}
+        }
+    }
+
+    @Test
+    public void IDENcommandTest(){
+        setupClientTest();
+        try{
+            //reading out the welcome message
+            response = in.readLine();
+        }catch (Exception e){e.printStackTrace();}
+
+        while (start){
+            try{
+                //assuming a username
+                String username = "TESTER";
+                //Sending out IDEN command to server
+                action = "IDEN "+username;
+                out.println(action);
+                //Cutting out empty response from server
+                while(in.readLine()==null){
+                    response = in.readLine();
+                }
+                //Moving on to the next line from server
+                response = in.readLine();
+                Assert.assertEquals("OK Welcome to the chat server "+username,response);
                 System.out.println(response);
                 if (response!=null){start = false;}
             }catch (Exception e){e.printStackTrace();}
