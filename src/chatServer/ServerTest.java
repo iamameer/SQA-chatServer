@@ -74,7 +74,7 @@ public class ServerTest {
         try{
             //reading out the welcome message
             response = in.readLine();
-
+            //creating 2 dummyClients
             DummyClient dummyClient1 = new DummyClient("TESTER1");
             DummyClient dummyClient2 = new DummyClient("TESTER2");
         }catch (Exception e){e.printStackTrace();}
@@ -132,7 +132,7 @@ public class ServerTest {
         try{
             //reading out the welcome message
             response = in.readLine();
-
+            //Creating a dummyClient
             DummyClient dummyClient = new DummyClient("TESTER");
         }catch (Exception e){e.printStackTrace();}
 
@@ -154,21 +154,27 @@ public class ServerTest {
 
     @Test
     public void MESGcommandTest(){
-        //Creatin
         setupClientTest();
         try{
             //reading out the welcome message
             response = in.readLine();
+            //creating 2 dummyClients
+            DummyClient dummyClient1 = new DummyClient("TESTER1");
+            DummyClient dummyClient2 = new DummyClient("TESTER2");
         }catch (Exception e){e.printStackTrace();}
 
         while (start){
             try{
-                //creating user2 = TESTER2
-                IDENcommandTest();
+                //Skipping welcome TESTER1 and welcome TESTER2
+                response = in.readLine();
+                response = in.readLine();
+                //Skipping one NULL response from server
+                response = in.readLine();
                 //Sending out MESG command
-                action = "MESG TESTER test message";
-                out.println(action);
-                response = in.readLine().substring(0,8);
+                //dummyClient2.mesg("TESTER2","test message");
+                action = "MESG TESTER1 test message";
+                //out.println(action);
+                response = in.readLine();
                 Assert.assertEquals("PM from ",response);
                 System.out.println(response);
                 if (response!=null){start = false;}
@@ -184,5 +190,6 @@ public class ServerTest {
                 out.println(action);
             }catch (Exception e){e.printStackTrace();}
         }
+
     }
 }
