@@ -74,16 +74,24 @@ public class ServerTest {
         try{
             //reading out the welcome message
             response = in.readLine();
+
+            DummyClient dummyClient1 = new DummyClient("TESTER1");
+            DummyClient dummyClient2 = new DummyClient("TESTER2");
         }catch (Exception e){e.printStackTrace();}
 
         while (start){
             try{
-                IDENcommandTest();
-                //Sending out STAT command
+                //Sending out LIST command
                 action = "LIST";
                 out.println(action);
-                response = in.readLine().substring(0,3);
-                Assert.assertEquals("OK ",response);
+                //Skipping welcome TESTER1 and welcome TESTER2
+                response = in.readLine();
+                response = in.readLine();
+                //Skipping one NULL response from server
+                response = in.readLine();
+                //Reading LIST reply from server
+                response = in.readLine();
+                Assert.assertEquals("OK TESTER1, TESTER2, ",response);
                 System.out.println(response);
                 if (response!=null){start = false;}
             }catch (Exception e){e.printStackTrace();}
@@ -129,13 +137,47 @@ public class ServerTest {
         while (start){
             try{
                 IDENcommandTest();
-                //Sending out STAT command
+                //Sending out HAIL command
                 action = "HAIL test broadcast";
                 out.println(action);
                 response = in.readLine().substring(0,14);
                 Assert.assertEquals("Broadcast from",response);
                 System.out.println(response);
                 if (response!=null){start = false;}
+            }catch (Exception e){e.printStackTrace();}
+        }
+    }
+
+    @Test
+    public void MESGcommandTest(){
+        //Creatin
+        setupClientTest();
+        try{
+            //reading out the welcome message
+            response = in.readLine();
+        }catch (Exception e){e.printStackTrace();}
+
+        while (start){
+            try{
+                //creating user2 = TESTER2
+                IDENcommandTest();
+                //Sending out MESG command
+                action = "MESG TESTER test message";
+                out.println(action);
+                response = in.readLine().substring(0,8);
+                Assert.assertEquals("PM from ",response);
+                System.out.println(response);
+                if (response!=null){start = false;}
+            }catch (Exception e){e.printStackTrace();}
+        }
+    }
+
+    public class DummyClient{
+        public DummyClient(String username){
+            setupClientTest();
+            try{
+                action = "IDEN "+username;
+                out.println(action);
             }catch (Exception e){e.printStackTrace();}
         }
     }
