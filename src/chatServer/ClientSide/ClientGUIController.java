@@ -68,15 +68,13 @@ public class ClientGUIController implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (!txtName.getText().isEmpty()){
-                    txtMessage.setDisable(false);
                     btnSend.setDisable(false);
-                    rbtnBroadcast.setDisable(false);
-                    rbtnPM.setDisable(false);
                 }else{
                     txtMessage.setDisable(true);
                     btnSend.setDisable(true);
                     rbtnBroadcast.setDisable(true);
                     rbtnPM.setDisable(true);
+                    btnSend.setText("LOGIN");
                 }
             }
         });
@@ -176,6 +174,9 @@ public class ClientGUIController implements Initializable{
                     btnSend.setText("SEND");
                     txtName.setDisable(true);
                     txtMessage.setText("");
+                    txtMessage.setDisable(false);
+                    rbtnBroadcast.setDisable(false);
+                    rbtnPM.setDisable(false);
                 }else if (btnSend.getText().equals("SEND")){
                     System.out.println("SEND");
                     if (rbtnBroadcast.isSelected() && !txtMessage.getText().isEmpty()){
@@ -192,6 +193,19 @@ public class ClientGUIController implements Initializable{
                         System.out.println("Sent: "+action);
                     }catch (Exception e){e.printStackTrace();}
                     txtMessage.setText("");
+                }
+                //Bad response
+                if (    response.equals("BAD invalid command to server") ||
+                        response.equals("BAD command not recognised") ||
+                        response.equals("BAD Your message is badly formatted") ||
+                        response.equals("BAD the user does not exist")){
+                    txtMessage.clear();
+                    txtMessage.setDisable(false);
+                }else if(response.equals("BAD username is already taken") ||
+                         response.equals("BAD You have not logged in yet") ||
+                         response.substring(0,18).equals("BAD you are already")){
+                    txtName.clear();
+                    txtName.setDisable(false);
                 }
             }
         });

@@ -41,7 +41,7 @@ public class Connection implements Runnable{
 		while(running) {
 			try {
 				line = in.readLine();
-				validateMessage(line);	
+				validateMessage(line);
 			} catch (IOException e) {
 				System.out.println("Read failed");
 				System.exit(-1);
@@ -113,7 +113,7 @@ public class Connection implements Runnable{
 	private void iden(String message) {
 		switch(state) {
 			case STATE_REGISTERED:
-				sendOverConnection("BAD you are already registerd with username " + username);
+				sendOverConnection("BAD you are already registered with username " + username);
 				break;
 			
 			case STATE_UNREGISTERED:
