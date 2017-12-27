@@ -1,6 +1,6 @@
 package chatServer;
 
-import chatServer.ClientSide.ClientGUI;
+import chatServer.Connection;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,16 +29,49 @@ public class ServerTest {
             client = new Socket("Alina",9000);
         }catch (Exception e){e.printStackTrace();}
 
-        Assert.assertEquals(9000,client.getLocalPort());
+        Assert.assertTrue(client.isConnected());
+        Assert.assertEquals(9000,client.getPort());
     }
 
+    BufferedReader in;
+    PrintWriter out;
+    @Test
+    public void serverReplyTest(){
+       try{
+           client = new Socket("Alina",9000);
+           in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+           out = new PrintWriter(client.getOutputStream(),true);
+       }catch (Exception e){e.printStackTrace();}
 
-  /*  @Test
-    public void testConnection(){
+        try{
+            Assert.assertEquals(in.readLine().substring(0,29),"OK Welcome to the chat server");
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+    String action;
+    @Test
+    public void StatCommandTest(){
+        try{
+            client = new Socket("Alina",9000);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new PrintWriter(client.getOutputStream(),true);
+        }catch (Exception e){e.printStackTrace();}
 
 
-        Assert.assertEquals(9000,client.getPort());
-        Assert.assertTrue(client.isConnected());
-    }*/
+            action = "STAT";
+            out.println(action);
+            Thread thread = new Thread(new Runnable(){
+                @Override
+                public void run(){
+                    String response;
+                    try{
+                        response = in.readLine();
+                    }catch (Exception e){e.printStackTrace();}
+                    Assert.assertEquals(response.substring(0,35),"There are currently");
+                }
+            }).start();
+
+
+    }
 
 }
