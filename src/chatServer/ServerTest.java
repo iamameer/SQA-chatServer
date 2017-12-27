@@ -29,6 +29,8 @@ public class ServerTest {
     public void setupClientTest(){
         try{
             client = new Socket("Alina",9000);
+            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            out = new PrintWriter(client.getOutputStream(),true);
         }catch (Exception e){e.printStackTrace();}
 
         Assert.assertTrue(client.isConnected());
@@ -39,11 +41,7 @@ public class ServerTest {
     PrintWriter out;
     @Test
     public void serverReplyTest(){
-       try{
-           client = new Socket("Alina",9000);
-           in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-           out = new PrintWriter(client.getOutputStream(),true);
-       }catch (Exception e){e.printStackTrace();}
+       setupClientTest();
 
         try{
             Assert.assertEquals("OK Welcome to the chat server",in.readLine().substring(0,29));
@@ -54,10 +52,8 @@ public class ServerTest {
     boolean start = true;
     @Test
     public void STATcommandTest(){
+        setupClientTest();
         try{
-            client = new Socket("Alina",9000);
-            in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            out = new PrintWriter(client.getOutputStream(),true);
             //reading out the welcome message
             response = in.readLine();
         }catch (Exception e){e.printStackTrace();}
@@ -67,8 +63,8 @@ public class ServerTest {
                 //Sending out STAT command
                 action = "STAT";
                 out.println(action);
-                //response = in.readLine().substring(0,22);
-                Assert.assertEquals("OK There are currently",in.readLine().substring(0,22));
+                response = in.readLine().substring(0,22);
+                Assert.assertEquals("OK There are currently",response);
                 System.out.println(response);
                 if (response!=null){start = false;}
             }catch (Exception e){e.printStackTrace();}
