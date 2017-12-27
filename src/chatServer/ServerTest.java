@@ -1,6 +1,5 @@
 package chatServer;
 
-import chatServer.Connection;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,9 +8,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ServerTest {
 
@@ -122,4 +118,25 @@ public class ServerTest {
         }
     }
 
+    @Test
+    public void HAILcommandTest(){
+        setupClientTest();
+        try{
+            //reading out the welcome message
+            response = in.readLine();
+        }catch (Exception e){e.printStackTrace();}
+
+        while (start){
+            try{
+                IDENcommandTest();
+                //Sending out STAT command
+                action = "HAIL test broadcast";
+                out.println(action);
+                response = in.readLine().substring(0,14);
+                Assert.assertEquals("Broadcast from",response);
+                System.out.println(response);
+                if (response!=null){start = false;}
+            }catch (Exception e){e.printStackTrace();}
+        }
+    }
 }
