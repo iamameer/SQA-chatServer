@@ -132,14 +132,18 @@ public class ServerTest {
         try{
             //reading out the welcome message
             response = in.readLine();
+
+            DummyClient dummyClient = new DummyClient("TESTER");
         }catch (Exception e){e.printStackTrace();}
 
         while (start){
             try{
-                IDENcommandTest();
                 //Sending out HAIL command
                 action = "HAIL test broadcast";
                 out.println(action);
+                //Skipping welcome TESTER
+                response = in.readLine();
+                //Reading HAIL response from server
                 response = in.readLine().substring(0,14);
                 Assert.assertEquals("Broadcast from",response);
                 System.out.println(response);
