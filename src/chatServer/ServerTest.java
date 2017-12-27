@@ -9,6 +9,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ServerTest {
 
@@ -44,34 +46,43 @@ public class ServerTest {
        }catch (Exception e){e.printStackTrace();}
 
         try{
-            Assert.assertEquals(in.readLine().substring(0,29),"OK Welcome to the chat server");
+            Assert.assertEquals("OK Welcome to the chat server",in.readLine().substring(0,29));
         }catch (Exception e){e.printStackTrace();}
     }
 
-    String action;
+    String action,response;
+    boolean start = true;
     @Test
-    public void StatCommandTest(){
+    public void STATCommandTest(){
         try{
             client = new Socket("Alina",9000);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(client.getOutputStream(),true);
+            //reading out the welcome message
+            response = in.readLine();
         }catch (Exception e){e.printStackTrace();}
 
-
-            action = "STAT";
-            out.println(action);
-            Thread thread = new Thread(new Runnable(){
-                @Override
-                public void run(){
-                    String response;
-                    try{
-                        response = in.readLine();
-                    }catch (Exception e){e.printStackTrace();}
-                    Assert.assertEquals(response.substring(0,35),"There are currently");
-                }
-            }).start();
-
-
+        while (start){
+            try{
+                //Sending out STAT command
+                action = "STAT";
+                out.println(action);
+                //response = in.readLine().substring(0,22);
+                Assert.assertEquals("OK There are currently",in.readLine().substring(0,22));
+                System.out.println(response);
+                if (response!=null){start = false;}
+            }catch (Exception e){e.printStackTrace();}
+        }
+        /*new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try{
+                    response = in.readLine().substring(0,18);
+                    Assert.assertEquals(response,"There are currentl");
+                    System.out.println(response);
+                }catch (Exception e){e.printStackTrace();}
+            }
+        },1000,1000);*/
     }
 
 }
