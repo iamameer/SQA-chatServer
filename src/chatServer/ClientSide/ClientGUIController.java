@@ -19,6 +19,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.*;
 import java.util.Timer;
@@ -123,7 +124,10 @@ public class ClientGUIController implements Initializable{
                 try{
                     out.println(action);
                     System.out.println("Sent: "+txtMessage.getText());
-                    initializeUI();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION,"OK Goodbye",ButtonType.OK);
+                    alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+                    alert.show();
+                    System.exit(0);
                 }catch (Exception e){e.printStackTrace();}
             }
         });
@@ -236,7 +240,9 @@ public class ClientGUIController implements Initializable{
                     response = in.readLine();
                     System.out.println("Receive: "+response);
                     if(!response.isEmpty()){txtChat.appendText(response + "\n");}
-                }catch (Exception e){e.printStackTrace();}
+                }
+                catch (SocketException se){se.printStackTrace(); System.exit(0);}
+                catch(Exception e){e.printStackTrace();}
             }
         },1000,1000);
     }
