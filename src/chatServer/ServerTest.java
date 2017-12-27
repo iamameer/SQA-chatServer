@@ -53,7 +53,7 @@ public class ServerTest {
     String action,response;
     boolean start = true;
     @Test
-    public void STATCommandTest(){
+    public void STATcommandTest(){
         try{
             client = new Socket("Alina",9000);
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -73,16 +73,6 @@ public class ServerTest {
                 if (response!=null){start = false;}
             }catch (Exception e){e.printStackTrace();}
         }
-        /*new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                try{
-                    response = in.readLine().substring(0,18);
-                    Assert.assertEquals(response,"There are currentl");
-                    System.out.println(response);
-                }catch (Exception e){e.printStackTrace();}
-            }
-        },1000,1000);*/
     }
 
 }
