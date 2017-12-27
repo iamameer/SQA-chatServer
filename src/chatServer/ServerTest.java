@@ -73,6 +73,28 @@ public class ServerTest {
     }
 
     @Test
+    public void LISTcommandTest(){
+        setupClientTest();
+        try{
+            //reading out the welcome message
+            response = in.readLine();
+        }catch (Exception e){e.printStackTrace();}
+
+        while (start){
+            try{
+                IDENcommandTest();
+                //Sending out STAT command
+                action = "LIST";
+                out.println(action);
+                response = in.readLine().substring(0,3);
+                Assert.assertEquals("OK ",response);
+                System.out.println(response);
+                if (response!=null){start = false;}
+            }catch (Exception e){e.printStackTrace();}
+        }
+    }
+
+    @Test
     public void IDENcommandTest(){
         setupClientTest();
         try{
