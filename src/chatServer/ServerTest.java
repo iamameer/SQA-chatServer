@@ -182,6 +182,33 @@ public class ServerTest {
         }
     }
 
+    @Test
+    public void QUITcommandTest(){
+        setupClientTest();
+        try{
+            //reading out the welcome message
+            response = in.readLine();
+        }catch (Exception e){e.printStackTrace();}
+
+        while (start){
+            try{
+                //Skipping one NULL response from server
+                response = in.readLine();
+                //Sending out QUIT command
+                action = "QUIT";
+                out.println(action);
+                response = in.readLine();
+                if (response.length()>10){
+                    Assert.assertEquals("OK thank you for sending",response.substring(0,24));
+                }else {
+                    Assert.assertEquals("OK goodbye",response.substring(0,10));
+                }
+                System.out.println(response);
+                if (response!=null){start = false;}
+            }catch (Exception e){e.printStackTrace();}
+        }
+    }
+
     public class DummyClient{
         public DummyClient(String username){
             setupClientTest();
