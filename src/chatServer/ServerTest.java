@@ -170,12 +170,12 @@ public class ServerTest {
                 response = in.readLine();
                 //Skipping one NULL response from server
                 response = in.readLine();
-                //Sending out MESG command
-                //dummyClient2.mesg("TESTER2","test message");
+                //Sending out MESG command (FROM TESTER2)
                 action = "MESG TESTER1 test message";
-                //out.println(action);
+                out.println(action);
+                //Reading response from server
                 response = in.readLine();
-                Assert.assertEquals("PM from ",response);
+                Assert.assertEquals("OK your message has been sent",response);
                 System.out.println(response);
                 if (response!=null){start = false;}
             }catch (Exception e){e.printStackTrace();}
