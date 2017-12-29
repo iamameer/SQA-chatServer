@@ -1,4 +1,4 @@
-package chatServer;
+package chatServer.Testing;
 
 import org.junit.Assert;
 import org.junit.Test;
