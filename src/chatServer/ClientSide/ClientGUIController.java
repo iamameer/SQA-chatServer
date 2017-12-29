@@ -155,6 +155,7 @@ public class ClientGUIController implements Initializable{
                 if(rbtnBroadcast.isSelected()){
                     txtSend.setDisable(true);
                     rbtnPM.setSelected(false);
+                    btnSend.setDisable(false);
                 }else{
                     txtSend.setDisable(false);
                     rbtnPM.setSelected(true);
