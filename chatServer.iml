@@ -18,5 +18,20 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="org.testfx:testfx-core:4.0.10-alpha" level="application" />
+    <orderEntry type="library" name="org.testfx:testfx-junit:4.0.10-alpha" level="application" />
+    <orderEntry type="library" name="org.hamcrest:hamcrest-junit:2.0.0.0" level="application" />
+    <orderEntry type="library" name="org.loadui:testFx:3.1.2" level="application" />
+    <orderEntry type="library" name="junit:junit:4.12" level="application" />
+    <orderEntry type="library" name="com.google.guava:guava:18.0" level="application" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/groovy-all-2.4.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
