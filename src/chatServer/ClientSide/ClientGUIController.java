@@ -139,11 +139,13 @@ public class ClientGUIController implements Initializable{
                 if (rbtnPM.isSelected()){
                     txtSend.setDisable(false);
                     rbtnBroadcast.setSelected(false);
+                    rbtnPM.setSelected(true);
                     txtSend.setText("");
                     btnSend.setDisable(true);
                 }else{
                     txtSend.setDisable(true);
                     rbtnBroadcast.setSelected(true);
+                    rbtnPM.setSelected(false);
                 }
             }
         });
@@ -155,10 +157,12 @@ public class ClientGUIController implements Initializable{
                 if(rbtnBroadcast.isSelected()){
                     txtSend.setDisable(true);
                     rbtnPM.setSelected(false);
+                    rbtnBroadcast.setSelected(true);
                     btnSend.setDisable(false);
                 }else{
                     txtSend.setDisable(false);
                     rbtnPM.setSelected(true);
+                    rbtnBroadcast.setSelected(false);
                 }
             }
         });
@@ -207,11 +211,6 @@ public class ClientGUIController implements Initializable{
                         response.equals("BAD the user does not exist")){
                     txtMessage.clear();
                     txtMessage.setDisable(false);
-                }else if(response.equals("BAD username is already taken") ||
-                         response.equals("BAD You have not logged in yet") ||
-                         response.substring(0,18).equals("BAD you are already")){
-                    txtName.clear();
-                    txtName.setDisable(false);
                 }
             }
         });
