@@ -1,6 +1,7 @@
 package chatServer.Testing;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -11,7 +12,14 @@ import java.net.Socket;
 
 public class ServerTest {
 
+    //Global Variables
     ServerSocket server;
+    Socket client;
+    BufferedReader in;
+    PrintWriter out;
+    String action,response;
+    boolean start = true;
+
     @Test
     public void setupServerTest(){
        try{
@@ -21,7 +29,6 @@ public class ServerTest {
        Assert.assertEquals(9000,server.getLocalPort());
     }
 
-    Socket client;
     @Test
     public void setupClientTest(){
         try{
@@ -34,8 +41,6 @@ public class ServerTest {
         Assert.assertEquals(9000,client.getPort());
     }
 
-    BufferedReader in;
-    PrintWriter out;
     @Test
     public void serverReplyTest(){
        setupClientTest();
@@ -45,8 +50,6 @@ public class ServerTest {
         }catch (Exception e){e.printStackTrace();}
     }
 
-    String action,response;
-    boolean start = true;
     @Test
     public void STATcommandTest(){
         setupClientTest();

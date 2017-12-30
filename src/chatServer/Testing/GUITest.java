@@ -2,7 +2,6 @@ package chatServer.Testing;
 
 import chatServer.ClientSide.ClientGUI;
 import chatServer.Server;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
