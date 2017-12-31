@@ -205,7 +205,7 @@ public class GUITest extends ApplicationTest{
         assertThat(txtChat.getText().contains(LISTreplyRegistered), is(true));
     }
 
-    //TestCase 3.3a - Event Listener = btnQuit (Not registered)
+    //TestCase 3.3 - Event Listener = btnQuit (Not registered)
     @Test
     public void TestCase3_3_EventListener_btnQuit() throws Exception {
         TextArea txtChat = GuiTest.find("#txtChat");

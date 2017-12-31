@@ -20,6 +20,7 @@ public class ServerTest {
     String action,response;
     boolean start = true;
 
+    //Setup Tests
     @Test
     public void setupServerTest(){
        try{
@@ -50,6 +51,7 @@ public class ServerTest {
         }catch (Exception e){e.printStackTrace();}
     }
 
+    //Command Tests
     @Test
     public void STATcommandTest(){
         setupClientTest();
